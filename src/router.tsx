@@ -8,13 +8,14 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import { Header } from './components/Header';
-import { DashboardPage } from './pages/DashboardPage/DashboardPage';
-import { LoginPage } from './pages/LoginPage/LoginPage';
-import { RegisterPage } from './pages/RegisterPage/RegisterPage';
-import { TestsListPage } from './pages/TestsListPage/TestsListPage';
-import { TestDetailsPage } from './pages/TestDetailsPage/TestDetailsPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { TestsListPage } from './pages/TestsListPage';
+import { TestDetailsPage } from './pages/TestDetailsPage';
 import { useAuth } from './context/AuthContext';
 import { auth } from './services/firebase';
+import { DocumentationPage } from './pages/DocumentationPage';
 
 const Layout = () => {
   const { user } = useAuth();
@@ -54,6 +55,13 @@ const testsRoute = createRoute({
   component: TestsListPage,
 });
 
+const documentationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/documentation',
+  beforeLoad: checkAuth,
+  component: DocumentationPage,
+});
+
 const testDetailsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/tests/$testId',
@@ -78,6 +86,7 @@ const routeTree = rootRoute.addChildren([
   loginRoute,
   registerRoute,
   testsRoute,
+  documentationRoute,
   testDetailsRoute,
 ]);
 

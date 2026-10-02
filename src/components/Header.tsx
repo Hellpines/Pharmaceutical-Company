@@ -40,13 +40,13 @@ export const Header: React.FC = () => {
           <span>Tables</span>
         </Link>
 
-        <a
-          href="#docs"
+        <Link
+          to="/documentation"
           className="flex items-center gap-[6px] text-brand-secondary hover:text-brand-primary [&.active]:text-brand-primary transition-colors"
         >
           <FileText className="h-4 w-4" />
           <span>Documentation</span>
-        </a>
+        </Link>
       </nav>
 
       <div className="flex items-center gap-[12px]">

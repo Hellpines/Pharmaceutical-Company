@@ -3,7 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid
 } from 'recharts';
 import { Star, Pause, X, ChevronDown, Loader2, ChevronUp } from 'lucide-react';
-import { useTests } from '../../hooks/useTests';
+import { useTests } from '../hooks/useTests';
 
 type DateRange = '7days' | '30days' | 'all';
 
