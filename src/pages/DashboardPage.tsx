@@ -232,7 +232,7 @@ export const DashboardPage = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex bg-white items-center justify-between w-50 space-x-2 border border-primary text-brand-secondary text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-background-primary transition"
+                  className="flex bg-white items-center justify-between w-[200px] space-x-2 border border-primary text-brand-secondary text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-background-primary transition"
                 >
                   <span>{dateLabel}</span>
                   {isDropdownOpen ? (
