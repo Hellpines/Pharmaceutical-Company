@@ -158,7 +158,7 @@ export const DashboardPage = () => {
   if (isLoading) {
     return (
       <div className="p-8 bg-[#f8fafc] min-h-screen flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
       </div>
     );
   }
@@ -170,7 +170,7 @@ export const DashboardPage = () => {
   const xTicks = [firstTick, midTick, lastTick].filter(Boolean) as string[];
 
   return (
-    <div className="bg-[#F5F7FA] text-slate-800 font-sans space-y-6">
+    <div className="bg-background-primary font-sans space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-brand-dark tracking-tight">Testing Dashboard</h1>
         <p className="text-sm text-brand-secondary mt-1">Uncover insights into your testing processes.</p>
@@ -179,7 +179,7 @@ export const DashboardPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         <div className="lg:col-span-7 flex flex-col space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-slate-200 pb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-border-primary pb-6">
 
             <div className="rounded-2xl flex items-center space-x-3">
               <div className="relative flex items-center justify-center">
@@ -189,7 +189,7 @@ export const DashboardPage = () => {
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-brand-dark text-[18px]">{stats?.inProgress || 0} tests</h4>
+                <h4 className="font-semibold text-brand-dark text-xl">{stats?.inProgress || 0} tests</h4>
                 <p className="text-sm text-brand-secondary mt-0.5">In progress</p>
               </div>
             </div>
@@ -202,7 +202,7 @@ export const DashboardPage = () => {
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-brand-dark text-[18px]">{stats?.onHoldOrPlanned || 0} tests</h4>
+                <h4 className="font-semibold text-brand-dark text-xl">{stats?.onHoldOrPlanned || 0} tests</h4>
                 <p className="text-sm text-brand-secondary mt-0.5">Planned / On hold</p>
               </div>
             </div>
@@ -215,7 +215,7 @@ export const DashboardPage = () => {
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-brand-dark text-[18px]">{stats?.failed || 0} tests</h4>
+                <h4 className="font-semibold text-brand-dark text-xl">{stats?.failed || 0} tests</h4>
                 <p className="text-sm text-brand-secondary mt-0.5">Failed</p>
               </div>
             </div>
@@ -232,7 +232,7 @@ export const DashboardPage = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex bg-white items-center justify-between w-[200px] space-x-2 border border-slate-200 text-brand-secondary text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-slate-50 transition"
+                  className="flex bg-white items-center justify-between w-50 space-x-2 border border-primary text-brand-secondary text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-background-primary transition"
                 >
                   <span>{dateLabel}</span>
                   {isDropdownOpen ? (
@@ -243,10 +243,10 @@ export const DashboardPage = () => {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute w-[100%] text-brand-secondary font-medium right-0 mt-2 bg-white border border-slate-100 rounded-lg shadow-lg z-10 overflow-hidden">
-                    <button onClick={() => { setDateRange('7days'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-slate-50">Last 7 days</button>
-                    <button onClick={() => { setDateRange('30days'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-slate-50">Last 30 days</button>
-                    <button onClick={() => { setDateRange('all'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-slate-50">All time</button>
+                  <div className="absolute w-full text-brand-secondary font-medium right-0 mt-2 bg-white border border-border-primary rounded-lg shadow-lg z-10 overflow-hidden">
+                    <button onClick={() => { setDateRange('7days'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-background-primary">Last 7 days</button>
+                    <button onClick={() => { setDateRange('30days'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-background-primary">Last 30 days</button>
+                    <button onClick={() => { setDateRange('all'); setIsDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-xs hover:bg-background-primary">All time</button>
                   </div>
                 )}
               </div>
@@ -290,13 +290,13 @@ export const DashboardPage = () => {
 
         <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-border-primary shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
                 <h4 className="text-xl font-bold text-brand-dark">Total tested drugs</h4>
                 <div className="text-xl font-bold text-brand-dark mt-1">{stats?.filteredTestsCount || 0}</div>
               </div>
-              <p className="text-[14px] text-brand-secondary mt-0.5">{dateLabel}</p>
+              <p className="text-sm text-brand-secondary mt-0.5">{dateLabel}</p>
             </div>
 
             <div className="h-28 my-3">
@@ -308,7 +308,7 @@ export const DashboardPage = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="space-y-1 text-[11px] pt-2 border-t border-slate-50">
+            <div className="space-y-1 text-[11px] pt-2 border-t border-border-primary">
               <div className="flex justify-between items-center">
                 <span className="flex items-center space-x-1.5 text-brand-secondary text-sm">
                   <span className="w-[18px] h-[9px] rounded bg-blue-500 inline-block"></span>
@@ -326,13 +326,13 @@ export const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-border-primary shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between">
-                <h4 className="text-xl font-bold text-brand-dark">Avg approval rate</h4>
-                <div className="text-xl font-bold text-slate-900 mt-1">{stats?.avgApprovalRate || 0}%</div>
+              <div className="flex items-center justify-between text-brand-dark">
+                <h4 className="text-xl font-bold">Avg approval rate</h4>
+                <div className="text-xl font-bold mt-1">{stats?.avgApprovalRate || 0}%</div>
               </div>
-              <p className="text-[14px] text-brand-secondary mt-0.5">{dateLabel}</p>
+              <p className="text-sm text-brand-secondary mt-0.5">{dateLabel}</p>
             </div>
 
             <div className="h-28 my-3">
@@ -344,7 +344,7 @@ export const DashboardPage = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="flex justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-50">
+            <div className="flex justify-between text-[11px] text-brand-secondary pt-2 border-t border-border-primary">
               <span>{stats?.dynamicApprovalRatesData?.[0]?.date || 'N/A'}</span>
               <span>
                 {stats?.dynamicApprovalRatesData?.[
@@ -354,10 +354,10 @@ export const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-border-primary shadow-sm flex flex-col justify-between">
             <div>
               <h4 className="text-xl font-bold text-brand-dark">Testing process</h4>
-              <p className="text-[14px] text-brand-secondary mt-0.5">{dateLabel}</p>
+              <p className="text-sm text-brand-secondary mt-0.5">{dateLabel}</p>
             </div>
 
             <div className="h-28 relative my-2 flex items-center justify-center">
@@ -372,7 +372,7 @@ export const DashboardPage = () => {
                   />
                 </PieChart>
               </ResponsiveContainer>
-              <span className="absolute text-xs font-bold text-slate-800">{stats?.completedPercentage}%</span>
+              <span className="absolute text-xs font-bold text-brand-dark">{stats?.completedPercentage}%</span>
             </div>
 
             <div className="space-y-1 text-[11px]">
@@ -388,10 +388,10 @@ export const DashboardPage = () => {
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-border-primary shadow-sm flex flex-col justify-between">
             <div>
               <h4 className="text-lg font-bold text-brand-dark leading-tight">Number of people tested</h4>
-              <p className="text-[14px] text-brand-secondary mt-0.5">{dateLabel}</p>
+              <p className="text-sm text-brand-secondary mt-0.5">{dateLabel}</p>
             </div>
 
             <div className="h-28 relative my-2 flex items-center justify-center">
@@ -410,20 +410,20 @@ export const DashboardPage = () => {
               </ResponsiveContainer>
             </div>
 
-            <div className="space-y-1 text-[11px]">
+            <div className="space-y-1 text-[11px] text-brand-secondary">
               <div className="flex justify-between items-center">
-                <span className="flex items-center space-x-1.5 text-slate-500 text-sm">
+                <span className="flex items-center space-x-1.5 text-sm">
                   <span className="w-[18px] h-[9px] rounded bg-blue-500 inline-block"></span>
                   <span>Tested</span>
                 </span>
                 <span className="font-semibold text-sm text-brand-secondary">{stats?.testedPercentage}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="flex items-center space-x-1.5 text-slate-500 text-sm">
+                <span className="flex items-center space-x-1.5 text-sm">
                   <span className="w-[18px] h-[9px] rounded bg-blue-100 inline-block"></span>
                   <span>Non-tested</span>
                 </span>
-                <span className="font-semibold text-sm text-brand-secondary">{100 - (stats?.testedPercentage || 0)}%</span>
+                <span className="font-semibold text-sm">{100 - (stats?.testedPercentage || 0)}%</span>
               </div>
             </div>
           </div>

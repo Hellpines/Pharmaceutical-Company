@@ -47,10 +47,10 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg border border-slate-100">
+    <div className="flex min-h-screen items-center justify-center bg-background-primary px-4 py-12 ">
+      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg border border-border-primary">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-slate-900">PharmaDash</h2>
+          <h2 className="text-3xl font-extrabold text-brand-dark">PharmaDash</h2>
           <p className="mt-2 text-sm text-brand-secondary">
             Create a new researcher account
           </p>
@@ -73,7 +73,7 @@ export const RegisterPage = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                 placeholder="name@company.com"
               />
             </div>
@@ -86,7 +86,7 @@ export const RegisterPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                 placeholder="••••••••"
               />
             </div>
@@ -99,7 +99,7 @@ export const RegisterPage = () => {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
                 placeholder="••••••••"
               />
             </div>

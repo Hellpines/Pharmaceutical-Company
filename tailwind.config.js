@@ -14,6 +14,12 @@ export default {
           primary: '#3874FF',
           dark: '#141828',
         },
+        border: {
+          primary: '#E0E3EB',
+        },
+        background: {
+          primary: '#F5F7FA',
+        },
       },
     },
   },

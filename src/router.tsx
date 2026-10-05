@@ -21,7 +21,7 @@ const Layout = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen bg-background-primary">
       {user && <Header />}
       <main className="p-6">
         <Outlet />
