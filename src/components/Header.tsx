@@ -1,25 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { 
-  Home, 
-  LayoutGrid, 
-  FileText, 
-  Sun, 
-  MessageCircle, 
+import {
+  Home,
+  LayoutGrid,
+  FileText,
+  Sun,
+  MessageCircle,
   Grip,
-  LogOut, 
-  User
+  LogOut,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const Header: React.FC = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = async () => {
+    setIsMenuOpen(false);
     await logout();
     navigate({ to: '/login' });
   };
+
+  const userInitial = user?.displayName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U';
 
   return (
     <header className="relative flex h-16 items-center justify-end border-b border-border-primary bg-white px-8">
@@ -71,17 +89,51 @@ export const Header: React.FC = () => {
           <Grip className="h-5 w-5" />
         </button>
 
-        <div className="flex items-center gap-3 pl-2 text-brand-secondary">
-          <div className="flex items-center justify-center h-8 w-8 overflow-hidden rounded-full border border-border-primary bg-background-primary">
-            <User className="h-5 w-5" />
-          </div>
+        <div ref={menuRef} className="relative flex items-center gap-3 pl-2 text-brand-secondary">
           <button
-            onClick={handleLogout}
-            title="Logout"
-            className="flex p-2 items-center justify-center rounded-md hover:bg-red-50 hover:text-red-600 transition-colors"
+            type="button"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            title="User menu"
+            className="flex items-center justify-center h-8 w-8 overflow-hidden rounded-full border border-border-primary bg-background-primary text-brand-dark transition-colors hover:border-brand-primary"
           >
-            <LogOut className="h-4 w-4" />
+            <span className="text-sm font-semibold">{userInitial}</span>
           </button>
+
+          {isMenuOpen && (
+            <div className="absolute right-0 top-full mt-3 w-72 overflow-hidden rounded-xl border border-border-primary bg-white shadow-[0_12px_40px_rgba(20,24,40,0.08)]">
+              <div className="flex items-center gap-3 border-b border-border-primary px-4 py-3">
+                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-border-primary bg-background-primary text-sm font-semibold text-brand-dark">
+                  {userInitial}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-brand-secondary">
+                    Account
+                  </p>
+                  <p className="truncate text-sm font-medium text-brand-dark">
+                    User
+                  </p>
+                </div>
+              </div>
+
+              <div className="px-4 py-3">
+                <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-brand-secondary">
+                  Email
+                </p>
+                <p className="mt-1 break-all text-sm text-brand-secondary">
+                  {user?.email || 'No email available'}
+                </p>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-border-primary bg-background-primary px-3 py-2 text-sm font-medium text-brand-dark transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>
