@@ -170,7 +170,7 @@ export const DashboardPage = () => {
   const xTicks = [firstTick, midTick, lastTick].filter(Boolean) as string[];
 
   return (
-    <div className="bg-background-primary font-sans space-y-6">
+    <div className="mx-auto max-w-[1600px] bg-background-primary font-sans space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-brand-dark tracking-tight">Testing Dashboard</h1>
         <p className="text-sm text-brand-secondary mt-1">Uncover insights into your testing processes.</p>

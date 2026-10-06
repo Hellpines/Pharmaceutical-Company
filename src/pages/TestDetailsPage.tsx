@@ -143,8 +143,8 @@ export const TestDetailsPage = () => {
   };
 
   return (
-    <div className="bg-background-primary font-sans flex flex-col lg:flex-row">
-      <div className="flex-1 pr-4 lg:pr-8">
+    <div className="mx-auto max-w-[1600px] bg-background-primary font-sans flex flex-col lg:flex-row">
+      <div className="flex-1 pr-0 lg:pr-8">
         <div className="bg-white border border-border-primary rounded-xl p-6 mb-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-brand-dark mb-2">

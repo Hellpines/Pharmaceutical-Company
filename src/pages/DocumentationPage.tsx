@@ -1,7 +1,7 @@
 export const DocumentationPage = () => {
 
   return (
-    <div className="p-6 text-brand-secondary">
+    <div className="mx-auto max-w-[1600px] p-0 text-brand-secondary sm:p-2 lg:p-4">
       <article className="mx-auto max-w-5xl space-y-8">
         <header className="space-y-4 border-b border-border-primary pb-6">
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-700">
