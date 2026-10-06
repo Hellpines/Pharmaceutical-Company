@@ -26,7 +26,7 @@ const renderStatusBadge = (status?: string) => {
   switch (normalizedStatus) {
     case 'in-progress':
       return (
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600 border border-blue-100">
+        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-brand-primary border border-brand-primary">
           In progress
         </span>
       );

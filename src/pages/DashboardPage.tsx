@@ -157,7 +157,7 @@ export const DashboardPage = () => {
 
   if (isLoading) {
     return (
-      <div className="p-8 bg-[#f8fafc] min-h-screen flex items-center justify-center">
+      <div className="p-8 bg-background-primary min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
       </div>
     );
@@ -311,14 +311,14 @@ export const DashboardPage = () => {
             <div className="space-y-1 text-[11px] pt-2 border-t border-border-primary">
               <div className="flex justify-between items-center">
                 <span className="flex items-center space-x-1.5 text-brand-secondary text-sm">
-                  <span className="w-[18px] h-[9px] rounded bg-blue-500 inline-block"></span>
+                  <span className="w-[18px] h-[9px] rounded bg-brand-primary inline-block"></span>
                   <span>Completed</span>
                 </span>
                 <span className="font-semibold text-brand-secondary text-sm">{stats?.completedPercentage}%</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="flex items-center space-x-1.5 text-brand-secondary text-sm">
-                  <span className="w-[18px] h-[9px] rounded bg-blue-100 inline-block"></span>
+                  <span className="w-[18px] h-[9px] rounded bg-[#E5EDFF] inline-block"></span>
                   <span>Awaiting results</span>
                 </span>
                 <span className="font-semibold text-brand-secondary text-sm">{100 - (stats?.completedPercentage || 0)}%</span>
@@ -413,14 +413,14 @@ export const DashboardPage = () => {
             <div className="space-y-1 text-[11px] text-brand-secondary">
               <div className="flex justify-between items-center">
                 <span className="flex items-center space-x-1.5 text-sm">
-                  <span className="w-[18px] h-[9px] rounded bg-blue-500 inline-block"></span>
+                  <span className="w-[18px] h-[9px] rounded bg-brand-primary inline-block"></span>
                   <span>Tested</span>
                 </span>
                 <span className="font-semibold text-sm text-brand-secondary">{stats?.testedPercentage}%</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="flex items-center space-x-1.5 text-sm">
-                  <span className="w-[18px] h-[9px] rounded bg-blue-100 inline-block"></span>
+                  <span className="w-[18px] h-[9px] rounded bg-[#E5EDFF] inline-block"></span>
                   <span>Non-tested</span>
                 </span>
                 <span className="font-semibold text-sm">{100 - (stats?.testedPercentage || 0)}%</span>
