@@ -1,21 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
 import {
   Home,
   LayoutGrid,
   FileText,
   Sun,
+  Moon,
   MessageCircle,
   Grip,
   LogOut,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export const Header: React.FC = () => {
+export const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      return savedTheme === 'dark';
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkTheme);
+    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+  }, [isDarkTheme]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,7 +54,7 @@ export const Header: React.FC = () => {
   const userInitial = user?.displayName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U';
 
   return (
-    <header className="relative flex h-16 items-center justify-end border-b border-border-primary bg-white px-8">
+    <header className="relative flex h-16 items-center justify-end border-b border-border-primary bg-white px-8 dark:bg-brand-dark dark:text-brand-secondary">
       <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-[42px] font-medium text-brand-secondary">
         <Link
           to="/"
@@ -68,11 +82,13 @@ export const Header: React.FC = () => {
       </nav>
 
       <div className="flex items-center gap-[12px]">
-        <button 
+        <button
+          type="button"
           title="Toggle theme"
-          className="flex p-2 items-center justify-center rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors"
+          onClick={() => setIsDarkTheme((prev) => !prev)}
+          className="flex p-2 items-center justify-center rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors dark:bg-brand-dark dark:text-orange-300"
         >
-          <Sun className="h-5 w-5" />
+          {isDarkTheme ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>
 
         <button 

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   useTable,
   createColumnHelper,
@@ -60,7 +60,7 @@ const renderStatusBadge = (status?: string) => {
 const PAGE_SIZE = 10;
 const columnHelper = createColumnHelper<{}, TestRecord>();
 
-export const TestsListPage: React.FC = () => {
+export const TestsListPage = () => {
   const { data: tests = [], isLoading } = useTests();
   const [showAll, setShowAll] = useState(false);
   const visibleTests = useMemo(

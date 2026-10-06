@@ -183,7 +183,7 @@ export const DashboardPage = () => {
 
             <div className="rounded-2xl flex items-center space-x-3">
               <div className="relative flex items-center justify-center">
-                <div className="w-10 h-10 bg-emerald-100 rounded-xl transform -rotate-6"></div>
+                <div className="w-10 h-10 bg-emerald-100 rounded-xl transform"></div>
                 <div className="w-10 h-10 bg-emerald-500 rounded-xl absolute flex items-center justify-center text-white">
                   <Star className="w-5 h-5 fill-current" />
                 </div>
@@ -196,7 +196,7 @@ export const DashboardPage = () => {
 
             <div className="rounded-2xl flex items-center space-x-3">
               <div className="relative flex items-center justify-center">
-                <div className="w-10 h-10 bg-amber-100 rounded-xl transform -rotate-6"></div>
+                <div className="w-10 h-10 bg-amber-100 rounded-xl transform"></div>
                 <div className="w-10 h-10 bg-amber-400 rounded-xl absolute flex items-center justify-center text-white">
                   <Pause className="w-5 h-5 fill-current" />
                 </div>
@@ -209,7 +209,7 @@ export const DashboardPage = () => {
 
             <div className="rounded-2xl flex items-center space-x-3">
               <div className="relative flex items-center justify-center">
-                <div className="w-10 h-10 bg-rose-100 rounded-xl transform -rotate-6"></div>
+                <div className="w-10 h-10 bg-rose-100 rounded-xl transform"></div>
                 <div className="w-10 h-10 bg-rose-400 rounded-xl absolute flex items-center justify-center text-white">
                   <X className="w-5 h-5 stroke-[3]" />
                 </div>

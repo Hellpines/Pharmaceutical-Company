@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from '@tanstack/react-router';
 import { MapPin, Clock, Calendar, ArrowRight, Loader2, Check, X, Pause } from 'lucide-react';
 import { useTest, useUpdateTestStatus } from '../hooks/useTests';
@@ -45,7 +44,7 @@ const generateCalendarLink = (test: TestRecord) => {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 };
 
-export const TestDetailsPage: React.FC = () => {
+export const TestDetailsPage = () => {
   const { testId } = useParams({ from: '/tests/$testId' });
 
   const { data: test, isLoading } = useTest(testId);
@@ -268,7 +267,7 @@ export const TestDetailsPage: React.FC = () => {
             {test.tags?.map((tag, idx) => (
               <span
                 key={idx}
-                className="bg-[#E3E6ED] text-brand-dark text-xs font-medium px-3 py-1 rounded-md"
+                className="bg-[#E3E6ED] text-brand-dark dark:bg-slate-700 dark:text-brand-secondary text-xs font-medium px-3 py-1 rounded-md"
               >
                 {tag}
               </span>

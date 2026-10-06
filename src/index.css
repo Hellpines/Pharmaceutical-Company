@@ -10,6 +10,21 @@ html, body, #root {
   margin: 0;
 }
 
+html.dark {
+  color-scheme: dark;
+  background-color: #0f172a;
+}
+
+body {
+  background-color: #F5F7FA;
+  color: #141828;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,3 +32,34 @@ html, body, #root {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .dark body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+  }
+
+  .dark .bg-white {
+    background-color: #111827;
+  }
+
+  .dark .bg-background-primary {
+    background-color: #0f172a;
+  }
+
+  .dark .border-border-primary {
+    border-color: #334155;
+  }
+
+  .dark .text-brand-dark {
+    color: #f8fafc;
+  }
+
+  .dark .text-brand-secondary {
+    color: #cbd5e1;
+  }
+
+  .dark .text-brand-primary {
+    color: #93c5fd;
+  }
+}
