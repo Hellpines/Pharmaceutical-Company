@@ -5,7 +5,6 @@ import {
   Outlet,
   redirect,
 } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import { Header } from './components/Header';
 import { DashboardPage } from './pages/DashboardPage';
@@ -26,7 +25,6 @@ const Layout = () => {
       <main className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8">
         <Outlet />
       </main>
-      <TanStackRouterDevtools position="bottom-right" />
     </div>
   );
 };

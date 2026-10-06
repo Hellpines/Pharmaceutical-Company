@@ -9,14 +9,31 @@ import {
   MessageCircle,
   Grip,
   LogOut,
+  Send,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+
+type ChatMessage = {
+  id: string;
+  text: string;
+  isOwn: boolean;
+};
 
 export const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<WebSocket | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [draftMessage, setDraftMessage] = useState('');
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { id: 'welcome', text: 'Connected to echo chat. Say hello!', isOwn: false },
+  ]);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -32,9 +49,82 @@ export const Header = () => {
   }, [isDarkTheme]);
 
   useEffect(() => {
+    let isMounted = true;
+    let reconnectTimer: number | undefined;
+
+    const connectSocket = () => {
+      const socket = new WebSocket('wss://ws.ifelse.io');
+      socketRef.current = socket;
+
+      socket.onopen = () => {
+        if (!isMounted) {
+          socket.close();
+          return;
+        }
+
+        setIsSocketConnected(true);
+      };
+
+      socket.onmessage = (event: MessageEvent<string>) => {
+        const nextMessage = typeof event.data === 'string' ? event.data.trim() : '';
+
+        if (!nextMessage) {
+          return;
+        }
+
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: `${Date.now()}-${Math.random()}`,
+            text: nextMessage,
+            isOwn: false,
+          },
+        ]);
+      };
+
+      socket.onerror = () => {
+        if (!isMounted) {
+          return;
+        }
+
+        setIsSocketConnected(false);
+      };
+
+      socket.onclose = () => {
+        if (!isMounted) {
+          return;
+        }
+
+        setIsSocketConnected(false);
+        reconnectTimer = window.setTimeout(() => {
+          connectSocket();
+        }, 2000);
+      };
+    };
+
+    connectSocket();
+
+    return () => {
+      isMounted = false;
+      if (reconnectTimer) {
+        window.clearTimeout(reconnectTimer);
+      }
+
+      socketRef.current?.close();
+      socketRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+
+      if (menuRef.current && !menuRef.current.contains(target)) {
         setIsMenuOpen(false);
+      }
+
+      if (chatRef.current && !chatRef.current.contains(target)) {
+        setIsChatOpen(false);
       }
     };
 
@@ -52,6 +142,30 @@ export const Header = () => {
   };
 
   const userInitial = user?.displayName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U';
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    const trimmedMessage = draftMessage.trim();
+    const socket = socketRef.current;
+
+    if (!trimmedMessage || !socket || socket.readyState !== WebSocket.OPEN) {
+      return;
+    }
+
+    socket.send(trimmedMessage);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        id: `${Date.now()}-${Math.random()}`,
+        text: trimmedMessage,
+        isOwn: true,
+      },
+    ]);
+    setDraftMessage('');
+  };
 
   return (
     <header className="border-b border-border-primary bg-white px-4 py-3 dark:bg-slate-900 dark:text-slate-100 sm:px-6 lg:px-8">
@@ -93,8 +207,10 @@ export const Header = () => {
           </button>
 
           <button
+            type="button"
             title="Chat"
-            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-background-primary text-brand-secondary transition-colors"
+            onClick={() => setIsChatOpen((prevValue) => !prevValue)}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-brand-secondary transition-colors hover:bg-background-primary"
           >
             <MessageCircle className="h-4 w-4" />
           </button>
@@ -154,6 +270,79 @@ export const Header = () => {
           </div>
         </div>
       </div>
+
+      {isChatOpen && (
+        <div
+          ref={chatRef}
+          className="fixed bottom-5 right-5 z-50 w-[320px] overflow-hidden rounded-2xl border border-border-primary bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)] dark:border-slate-700 dark:bg-slate-900"
+        >
+          <div className="flex items-center justify-between border-b border-border-primary bg-background-primary px-4 py-3 dark:bg-slate-800">
+            <div className="flex items-center gap-2">
+              <div
+                className={`h-2.5 w-2.5 rounded-full ${
+                  isSocketConnected ? 'bg-emerald-500' : 'bg-amber-500'
+                }`}
+              />
+              <p className="text-sm font-semibold text-brand-dark dark:text-slate-100">Echo chat</p>
+            </div>
+
+            <button
+              type="button"
+              title="Close chat"
+              onClick={() => setIsChatOpen(false)}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-brand-secondary transition-colors hover:bg-white dark:hover:bg-slate-700"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="flex h-72 flex-col">
+            <div className="flex-1 space-y-3 overflow-y-auto bg-background-primary/40 px-3 py-3 dark:bg-slate-800/50">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${
+                      message.isOwn
+                        ? 'bg-brand-primary text-white'
+                        : 'bg-white text-brand-dark shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                    }`}
+                  >
+                    {message.text}
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleSendMessage();
+              }}
+              className="flex items-center gap-2 border-t border-border-primary bg-white p-3 dark:bg-slate-900"
+            >
+              <input
+                value={draftMessage}
+                onChange={(event) => setDraftMessage(event.target.value)}
+                placeholder="Type a message..."
+                className="flex-1 rounded-xl border border-border-primary bg-background-primary px-3 py-2 text-sm text-brand-dark outline-none transition-colors placeholder:text-brand-secondary focus:border-brand-primary dark:bg-slate-800 dark:text-slate-100"
+              />
+
+              <button
+                type="submit"
+                disabled={!draftMessage.trim() || !isSocketConnected}
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary text-white transition-colors hover:bg-brand-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                title="Send message"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

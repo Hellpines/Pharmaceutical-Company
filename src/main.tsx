@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { router } from './router';
 import { AuthProvider } from './context/AuthContext';
@@ -23,7 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
 );
