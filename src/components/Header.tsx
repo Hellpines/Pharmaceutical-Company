@@ -274,7 +274,7 @@ export const Header = () => {
       {isChatOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-5 right-5 z-50 w-[320px] overflow-hidden rounded-2xl border border-border-primary bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)] dark:border-slate-700 dark:bg-slate-900"
+          className="fixed bottom-5 right-5 z-50 w-[290px] overflow-hidden rounded-2xl border border-border-primary bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)] dark:border-slate-700 dark:bg-slate-900"
         >
           <div className="flex items-center justify-between border-b border-border-primary bg-background-primary px-4 py-3 dark:bg-slate-800">
             <div className="flex items-center gap-2">
