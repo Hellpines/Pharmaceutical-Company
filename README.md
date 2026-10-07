@@ -109,4 +109,4 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 ## Deployment
 
-Deployment link: [https://Hellpines.github.io/Pharmaceutical-Company](deployment)
+Deployment link: [deployment](https://hellpines.github.io/Pharmaceutical-Company)
