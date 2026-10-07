@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      const repoName = '/Pharmaceutical-Company';
+      const currentPath = window.location.pathname;
+      const neededPath = currentPath === '/' ? '' : currentPath;
+
+      if (neededPath && !currentPath.includes('/__')) {
+        window.location.replace(`${repoName}/#${neededPath}${window.location.search}${window.location.hash}`);
+      } else {
+        window.location.replace(`${repoName}/`);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
