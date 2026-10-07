@@ -86,5 +86,27 @@ To preview the production build locally:
 npm run preview
 ```
 
+## Environment Variables
+
+This project uses Firebase variables that must be defined in a local `.env` file.
+
+Create a `.env` file in the project root based on `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Then fill in your real Firebase values:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
+
 ## Deployment
-Deployment link: 
+
+Deployment link: https://Hellpines.github.io/Pharmaceutical-Company
