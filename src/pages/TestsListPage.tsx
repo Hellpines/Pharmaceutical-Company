@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   useTable,
   createColumnHelper,
@@ -63,6 +63,23 @@ const columnHelper = createColumnHelper<{}, TestRecord>();
 export const TestsListPage = () => {
   const { data: tests = [], isLoading } = useTests();
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+
+    const handleResize = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleResize);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleResize);
+    };
+  }, []);
+
   const visibleTests = useMemo(
     () => (showAll ? tests : tests.slice(0, PAGE_SIZE)),
     [showAll, tests]
@@ -162,9 +179,14 @@ export const TestsListPage = () => {
     []
   ) as ReturnType<typeof columnHelper.accessor>[];
 
+  const filteredColumns = useMemo(
+    () => (isMobile ? [columns[0], columns[columns.length - 1]] : columns),
+    [columns, isMobile]
+  );
+
   const table = useTable<{}, TestRecord>({
     data: visibleTests,
-    columns,
+    columns: filteredColumns,
     features: {},
     initialState: {
       pagination: {
@@ -206,7 +228,12 @@ export const TestsListPage = () => {
                   className="border-t border-border-primary text-sm text-brand-dark uppercase tracking-wider"
                 >
                   {headerGroup.headers.map((header) => (
-                    <th key={header.id} className="py-3 text-left border-b border-border-primary">
+                    <th
+                      key={header.id}
+                      className={`py-3 text-left border-b border-border-primary ${
+                        isMobile && header.id !== 'name' && header.id !== 'status' ? 'hidden' : ''
+                      }`}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -223,7 +250,12 @@ export const TestsListPage = () => {
                 table.getRowModel().rows.map((row) => (
                   <tr key={row.id}>
                     {row.getAllCells().map((cell) => (
-                      <td key={cell.id} className="py-6 whitespace-nowrap border-b border-border-primary">
+                      <td
+                        key={cell.id}
+                        className={`py-6 whitespace-nowrap border-b border-border-primary ${
+                          isMobile && cell.column.id !== 'name' && cell.column.id !== 'status' ? 'hidden' : ''
+                        }`}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

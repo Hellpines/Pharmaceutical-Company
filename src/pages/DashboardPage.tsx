@@ -254,7 +254,10 @@ export const DashboardPage = () => {
 
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <LineChart
+                  data={trendData}
+                  margin={{ top: 12, right: 20, left: 20, bottom: 4 }}
+                >
                   <CartesianGrid vertical={true} horizontal={false} stroke="#E2E8F0" />
                   <XAxis
                     dataKey="date"

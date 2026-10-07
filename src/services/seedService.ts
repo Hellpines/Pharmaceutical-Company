@@ -25,22 +25,3 @@ export const seedDatabaseIfEmpty = async (): Promise<void> => {
     console.error('Error occurred while seeding the database:', error);
   }
 };
-
-import { writeBatch } from 'firebase/firestore';
-
-export const seedDatabase = async () => {
-  try {
-    const batch = writeBatch(db);
-    const testsCollection = collection(db, 'tests');
-
-    INITIAL_TESTS.forEach((test) => {
-      const newDocRef = doc(testsCollection);
-      batch.set(newDocRef, test);
-    });
-
-    await batch.commit();
-    console.log('✅ Все тесты успешно загружены в Firebase!');
-  } catch (error) {
-    console.error('❌ Ошибка при загрузке данных:', error);
-  }
-};
