@@ -1,48 +1,10 @@
 import { useParams } from '@tanstack/react-router';
 import { MapPin, Clock, Calendar, ArrowRight, Loader2, Check, X, Pause } from 'lucide-react';
-import { useTest, useUpdateTestStatus } from '../hooks/useTests';
-import { type TestRecord, type TestStatus } from '../types/test';
-
-const formatEventDateRange = (start?: string, end?: string) => {
-  if (!start || !end) return 'Dates not specified';
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
-  const startStr = startDate.toLocaleDateString('en-US', options);
-  const endStr = endDate.toLocaleDateString('en-US', { ...options, year: 'numeric' });
-
-  return `${startStr} - ${endStr}`;
-};
-
-const generateCalendarLink = (test: TestRecord) => {
-  if (!test.startDate || !test.endDate) return '';
-
-  const formatGoogleCalendarDate = (dateStr: string, timeStr: string = '00:00') => {
-    const date = new Date(`${dateStr}T${timeStr}:00`);
-    return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
-  };
-
-  const start = formatGoogleCalendarDate(test.startDate, test.startTime || '00:00');
-  const end = formatGoogleCalendarDate(test.endDate, test.endTime || '23:59');
-  const location = [
-    test.location?.address,
-    test.location?.city,
-    test.location?.country,
-  ]
-    .filter(Boolean)
-    .join(', ');
-
-  const params = new URLSearchParams({
-    action: 'TEMPLATE',
-    text: test.name,
-    details: test.description || 'Clinical trial event',
-    location,
-    dates: `${start}/${end}`,
-  });
-
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
-};
+import {  useUpdateTestStatus } from '../hooks/useUpdateTestStatus';
+import { type TestStatus } from '../types/test';
+import { useTest } from '../hooks/useTest';
+import { formatEventDateRange } from '../helpers/formatEventDateRange';
+import { generateCalendarLink } from '../helpers/generateCalendarLink';
 
 export const TestDetailsPage = () => {
   const { testId } = useParams({ from: '/tests/$testId' });

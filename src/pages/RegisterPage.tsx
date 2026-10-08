@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebase';
+import Input from '../components/Input';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -64,45 +65,27 @@ export const RegisterPage = () => {
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4 rounded-md shadow-sm">
-            <div>
-              <label className="block text-sm font-medium text-brand-secondary mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
-                placeholder="name@company.com"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-brand-secondary mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
-                placeholder="••••••••"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-brand-secondary mb-1">
-                Confirm password
-              </label>
-              <input
-                type="password"
-                required
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full rounded-md border border-border-primary px-3 py-2 text-brand-dark placeholder-brand-secondary focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary"
-                placeholder="••••••••"
-              />
-            </div>
+            <Input
+              value={email}
+              type="email"
+              setValue={setEmail}
+              placeholder="name@company.com"
+              label="Email"
+            />
+            <Input
+              value={password}
+              type="password"
+              setValue={setPassword}
+              placeholder="••••••••"
+              label="Password"
+            />
+            <Input
+              value={confirmPassword}
+              type="password"
+              setValue={setConfirmPassword}
+              placeholder="••••••••"
+              label="Confirm password"
+            />
           </div>
 
           <button
